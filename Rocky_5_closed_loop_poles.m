@@ -25,8 +25,8 @@ syms s a b l g Kp Ki Jp Ji Ci   % define symbolic variables
 
 Hvtheta = -s/l/(s^2-g/l);       % TF from velocity to angle of pendulum
 
-K = Kp + Ki/s;                  % TF of the PI angle controller
-M = a*b/(s+a);                  % TF of motor (1st order model) 
+K = Kp + Ki/s                  % TF of the PI angle controller
+M = a*b/(s+a)                  % TF of motor (1st order model) 
 % M = 1;                        % TF without motor
 %
 J = Jp + Ji/s + Ci/s^2;         % TF of controller around motor-combined PI of x and v
@@ -63,7 +63,16 @@ p1 = -1 + 1*i   % dominant pole pair
 p2 = -1 - 1*i    % dominant pole pair 
 p3 = -2
 p4 = -5   % dominant pole pair
-p5 = -5 % dominant pole pair 
+p5 = -5 % dominant pole pair
+
+w_n = 0.877*6.28
+angle1 = 20;
+angle2 = 20;
+p1 =  w_n*(-cosd(angle1) - sind(angle1))  % dominant pole pair
+p2 = w_n*(-cosd(angle1) + sind(angle1))    % dominant pole pair 
+p3 = -w_n
+p4 = w_n*(-cosd(angle2) - sind(angle2))   % dominant pole pair
+p5 = w_n*(-cosd(angle2) - sind(angle2)) % dominant pole pair 
 
 % target characteristic polynomial
 % if motor model (TF) is added, order of polynomial will increases
@@ -134,12 +143,3 @@ check_closed_loop_poles = vpa (roots(subs(chk_coeffs_denom)), 4)
     impulse(TFH);   %plot the impulse reponse
     figure(2)
     step(TFH)       %plot the step response
-    
-    
-
-
-
-
-
-
-
