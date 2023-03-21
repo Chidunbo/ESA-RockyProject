@@ -85,12 +85,24 @@ void BalanceRocky()
 {
 
     // **************Enter the control parameters here
+
+  float Kp = 1.2151e+06;
+  float Ki = 6.3253e+06;  
+  float Ji = -1.2080e+06; 
+  float Jp = 1.6871e+05;
+  float Ci = -1.3269e+06; 
     
-  float Kp = 4.7554e+05;
-  float Ki = 2.4826e+06;
-  float Ci = -5.7830e+04;   
-  float Jp = 1.3226e+05;
-  float Ji = -1.4369e+05;
+//  float Kp = 4.7554e+05;
+//  float Ki = 2.4826e+06;
+//  float Ci = -5.7830e+04;   
+//  float Jp = 1.3226e+05;
+//  float Ji = -1.4369e+05;
+
+//  float Kp = 1.5828e+06 + 5.9347e-67i;
+//  float Ki = 8.4120e+06;
+//  float Ci = -2.3015e+06 + 1.1869e-66i;   
+//  float Jp = 1.6843e+05;
+//  float Ji = -5.7622e+06;
 
 
 
@@ -119,8 +131,8 @@ void BalanceRocky()
   // right to left. This helps ensure that the Left and Right motors are balanced
 
   // *** enter equations for input signals for v_c (left and right) in terms of the variables available ****
-    v_c_R = v_d - (Jp * measured_speedR + Ji * distRight_m) - (Ci * dist_accum);
-    v_c_L = v_d - (Jp * measured_speedL + Ji * distLeft_m) - (Ci * dist_accum);      
+    v_c_R = v_d - (Jp * measured_speedR + Ji * distLeft_m) - (Ci * dist_accum);
+    v_c_L = v_d - (Jp * measured_speedL + Ji * distRight_m) - (Ci * dist_accum);      
 
 
 
@@ -137,7 +149,7 @@ void BalanceRocky()
    
     // Set the motor speeds
     motors.setSpeeds((int16_t) (v_c_L), (int16_t)(v_c_R));
-    Serial.println("set!");
+    // Serial.println("set!");
 
 }
 
@@ -264,7 +276,7 @@ void loop()
       balanceResetEncoders();
       start_flag = 1;
       buzzer.playFrequency(DIV_BY_10 | 445, 1000, 15);
-      Serial.println("Starting");
+      // Serial.println("Starting");
       ledYellow(1);
     }
   }
@@ -273,14 +285,14 @@ void loop()
   // every UPDATE_TIME_MS, if the start_flag has been set, do the balancing
   if(start_flag)
   {
-    Serial.println("check1");
+    // Serial.println("check1");
     GetMotorAndAngleMeasurements();
     if(enableLongTermGyroCorrection)
       del_theta = 0.999*del_theta + 0.001*angle_rad;  // assume that the robot is standing. Smooth out the angle to correct for long-term gyro drift
     
     // Control the robot
     BalanceRocky();
-    Serial.println("balancing");
+    // Serial.println("balancing");
   }
   prev_time = cur_time;
   }  
@@ -289,13 +301,13 @@ void loop()
   {
     motors.setSpeeds(0,0);
     start_flag = 0;
-    Serial.println("shut1");
+    // Serial.println("shut1");
   }
   else if(start_flag && angle < -0.78)
   {
     motors.setSpeeds(0,0);
     start_flag = 0;
-    Serial.println("shut2");
+    // Serial.println("shut2");
   } 
 
 // kill switch
