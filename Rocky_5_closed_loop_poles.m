@@ -58,12 +58,12 @@ Hcloop_sub = subs(Hcloop) % sub parameter values into Hcloop
 % p3 = -10
 % p4 = -8
 % p5 = -8.
-
-p1 = -1 + 1*i   % dominant pole pair
-p2 = -1 - 1*i    % dominant pole pair 
-p3 = -2
-p4 = -5   % dominant pole pair
-p5 = -5 % dominant pole pair
+% 
+% p1 = -1 + 1*i   % dominant pole pair
+% p2 = -1 - 1*i    % dominant pole pair 
+% p3 = -2
+% p4 = -5   % dominant pole pair
+% p5 = -5 % dominant pole pair
 
 w_n = 0.877*6.28
 angle1 = 20;
